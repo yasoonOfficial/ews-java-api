@@ -82,8 +82,24 @@ public final class IFunctions {
   public static class Base64Encoder implements IFunction<Object, String> {
     public static final Base64Encoder INSTANCE = new Base64Encoder();
 
+    /*
+     * public String func(final Object o) { return
+     * Base64.encodeBase64String((byte[]) o); }
+     */
     public String func(final Object o) {
-      return Base64.encodeBase64String((byte[]) o);
+      if (o instanceof Byte[]) {
+        Byte[] source = (Byte[]) o;
+        byte[] bytes = new byte[source.length];
+        for (int i = 0; i < source.length; i++) {
+          if (source[i] == null) {
+            throw new NullPointerException("source array may not contain nulls");
+          }
+          bytes[i] = source[i];
+        }
+        return Base64.encodeBase64String(bytes);
+      } else {
+        return Base64.encodeBase64String((byte[]) o);
+      }
     }
   }
 
