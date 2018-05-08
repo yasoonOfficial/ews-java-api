@@ -23,9 +23,18 @@
 
 package microsoft.exchange.webservices.data.util;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.TimeZone;
+import java.util.Map.Entry;
+
+import microsoft.exchange.webservices.data.property.complex.time.TimeZoneDefinition;
 
 /**
  * Miscellany timezone functions
@@ -35,15 +44,13 @@ public final class TimeZoneUtils {
   // A map of olson name > Microsoft Name.
   private static final Map<String, String> olsonTimeZoneToMs = createOlsonTimeZoneToMsMap();
 
-
   private TimeZoneUtils() {
     throw new UnsupportedOperationException();
   }
 
-
   /**
-   * Convert Olson TimeZone to Microsoft TimeZone Generated using Unicode CLDR project Example:
-   * https://gist.github.com/scottmac/655675e9b4d4913c539c
+   * Convert Olson TimeZone to Microsoft TimeZone Generated using Unicode CLDR
+   * project Example: https://gist.github.com/scottmac/655675e9b4d4913c539c
    *
    * @param timeZone java timezone (Olson)
    * @return a microsoft timezone identifier (ala Eastern Standard Time)
@@ -57,6 +64,26 @@ public final class TimeZoneUtils {
     return olsonTimeZoneToMs.get(id);
   }
 
+  public static ZoneOffset getTimeZoneOffset(final TimeZoneDefinition msTimezone) {
+    if (msTimezone == null) {
+      throw new IllegalArgumentException("Parameter \"msTimezone\" must be defined");
+    }
+
+    final String id = msTimezone.getId();
+    final Set<String> matchingIanaIds = getKeysByValue(olsonTimeZoneToMs, id);
+    final ZoneId zoneId = ZoneId.of(matchingIanaIds.iterator().next());
+    return zoneId.getRules().getOffset(Instant.now());
+  }
+
+  public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+    Set<T> keys = new HashSet<T>();
+    for (Entry<T, E> entry : map.entrySet()) {
+      if (Objects.equals(value, entry.getValue())) {
+        keys.add(entry.getKey());
+      }
+    }
+    return keys;
+  }
 
   public static Map<String, String> createOlsonTimeZoneToMsMap() {
     final Map<String, String> map = new HashMap<String, String>();
@@ -623,7 +650,7 @@ public final class TimeZoneUtils {
     map.put("Universal", "UTC");
     map.put("W-SU", "Russian Standard Time");
     map.put("Zulu", "UTC");
-    //additions outside of Unicode list
+    // additions outside of Unicode list
     map.put("America/Adak", "Hawaiian Standard Time,(UTC-10:00) Hawaii");
     map.put("America/Atka", "Hawaiian Standard Time,(UTC-10:00) Hawaii");
     map.put("America/Metlakatla", "Pacific Standard Time");
