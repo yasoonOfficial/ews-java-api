@@ -647,6 +647,8 @@ public final class TimeZoneUtils {
     map.put("US/Pacific-New", "Pacific Standard Time");
     map.put("US/Samoa", "UTC-11");
     map.put("UTC", "UTC");
+    map.put("UTC", "tzone://Microsoft/Utc");
+    map.put("UTC", "tzone://Microsoft/Utc-UTC");
     map.put("Universal", "UTC");
     map.put("W-SU", "Russian Standard Time");
     map.put("Zulu", "UTC");
