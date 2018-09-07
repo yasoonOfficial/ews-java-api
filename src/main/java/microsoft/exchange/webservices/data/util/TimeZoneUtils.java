@@ -28,6 +28,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -71,12 +74,23 @@ public final class TimeZoneUtils {
 
     final String id = msTimezone.getId();
     final Set<String> matchingIanaIds = getKeysByValue(olsonTimeZoneToMs, id);
-    final ZoneId zoneId = ZoneId.of(matchingIanaIds.iterator().next());
+
+    // We have some dummy entries in our list, don't rely on the order, but double
+    // check => Usually order should be enough.. but well
+    final Iterator<String> matchingIterator = matchingIanaIds.iterator();
+    String ianaTimezoneId = matchingIterator.next();
+    if (ianaTimezoneId.startsWith("_") && matchingIterator.hasNext()) {
+      ianaTimezoneId = matchingIterator.next();
+    } else if (ianaTimezoneId.startsWith("_")) {
+      ianaTimezoneId = ianaTimezoneId.replace("_", "");
+    }
+
+    final ZoneId zoneId = ZoneId.of(ianaTimezoneId);
     return zoneId.getRules().getOffset(Instant.now());
   }
 
   public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-    Set<T> keys = new HashSet<T>();
+    Set<T> keys = new LinkedHashSet<T>();
     for (Entry<T, E> entry : map.entrySet()) {
       if (Objects.equals(value, entry.getValue())) {
         keys.add(entry.getKey());
@@ -86,7 +100,7 @@ public final class TimeZoneUtils {
   }
 
   public static Map<String, String> createOlsonTimeZoneToMsMap() {
-    final Map<String, String> map = new HashMap<String, String>();
+    final Map<String, String> map = new LinkedHashMap<String, String>();
     map.put("Africa/Abidjan", "Greenwich Standard Time");
     map.put("Africa/Accra", "Greenwich Standard Time");
     map.put("Africa/Addis_Ababa", "E. Africa Standard Time");
@@ -647,9 +661,8 @@ public final class TimeZoneUtils {
     map.put("US/Pacific-New", "Pacific Standard Time");
     map.put("US/Samoa", "UTC-11");
     map.put("UTC", "UTC");
-    map.put("UTC", "tzone://Microsoft/Utc");
-    map.put("UTC", "tzone://Microsoft/Utc-UTC");
     map.put("Universal", "UTC");
+    map.put("_UTC", "tzone://Microsoft/Utc");
     map.put("W-SU", "Russian Standard Time");
     map.put("Zulu", "UTC");
     // additions outside of Unicode list
