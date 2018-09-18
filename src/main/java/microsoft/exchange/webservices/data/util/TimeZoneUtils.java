@@ -67,7 +67,7 @@ public final class TimeZoneUtils {
     return olsonTimeZoneToMs.get(id);
   }
 
-  public static ZoneOffset getTimeZoneOffset(final TimeZoneDefinition msTimezone) {
+  public static ZoneOffset getTimeZoneOffset(final TimeZoneDefinition msTimezone, final Instant when) {
     if (msTimezone == null) {
       throw new IllegalArgumentException("Parameter \"msTimezone\" must be defined");
     }
@@ -86,7 +86,7 @@ public final class TimeZoneUtils {
     }
 
     final ZoneId zoneId = ZoneId.of(ianaTimezoneId);
-    return zoneId.getRules().getOffset(Instant.now());
+    return zoneId.getRules().getOffset(when);
   }
 
   public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
