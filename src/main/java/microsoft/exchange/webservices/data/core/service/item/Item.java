@@ -233,11 +233,13 @@ public class Item extends ServiceObject {
    * @param parentFolderId      the parent folder id
    * @param messageDisposition  the message disposition
    * @param sendInvitationsMode the send invitations mode
+   * @param skipSendingMeetingInviteToGroup the skipSendingMeetingInviteToGroup mode
    * @throws Exception the exception
    */
   protected void internalCreate(FolderId parentFolderId,
       MessageDisposition messageDisposition,
-      SendInvitationsMode sendInvitationsMode) throws Exception {
+      SendInvitationsMode sendInvitationsMode, 
+      Boolean skipSendingMeetingInviteToGroup) throws Exception {
     this.throwIfThisIsNotNew();
     this.throwIfThisIsAttachment();
 
@@ -247,7 +249,8 @@ public class Item extends ServiceObject {
           parentFolderId,
           messageDisposition,
           sendInvitationsMode != null ? sendInvitationsMode : this
-              .getDefaultSendInvitationsMode());
+              .getDefaultSendInvitationsMode(),
+          skipSendingMeetingInviteToGroup);
 
       this.getAttachments().save();
     }
@@ -356,9 +359,9 @@ public class Item extends ServiceObject {
    * @param parentFolderId the parent folder id
    * @throws Exception the exception
    */
-  public void save(FolderId parentFolderId) throws Exception {
+  public void save(FolderId parentFolderId, Boolean skipSendingMeetingInviteToGroup) throws Exception {
     EwsUtilities.validateParam(parentFolderId, "parentFolderId");
-    this.internalCreate(parentFolderId, MessageDisposition.SaveOnly, null);
+    this.internalCreate(parentFolderId, MessageDisposition.SaveOnly, null, skipSendingMeetingInviteToGroup);
   }
 
   /**
@@ -369,9 +372,9 @@ public class Item extends ServiceObject {
    * @param parentFolderName the parent folder name
    * @throws Exception the exception
    */
-  public void save(WellKnownFolderName parentFolderName) throws Exception {
+  public void save(WellKnownFolderName parentFolderName, Boolean skipSendingMeetingInviteToGroup) throws Exception {
     this.internalCreate(new FolderId(parentFolderName),
-        MessageDisposition.SaveOnly, null);
+        MessageDisposition.SaveOnly, null, skipSendingMeetingInviteToGroup);
   }
 
   /**
@@ -383,7 +386,7 @@ public class Item extends ServiceObject {
    * @throws Exception the exception
    */
   public void save() throws Exception {
-    this.internalCreate(null, MessageDisposition.SaveOnly, null);
+    this.internalCreate(null, MessageDisposition.SaveOnly, null, false);
   }
 
   /**

@@ -41,10 +41,9 @@ import java.util.Collection;
  * Represents an abstract CreateItem request.
  *
  * @param <TServiceObject> The type of the service object.
- * @param <TResponse>      The type of the response.
+ * @param <TResponse> The type of the response.
  */
-abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
-    TResponse extends ServiceResponse>
+abstract class CreateItemRequestBase<TServiceObject extends ServiceObject, TResponse extends ServiceResponse>
     extends CreateRequest<TServiceObject, TResponse> {
 
   /**
@@ -58,15 +57,18 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
   private SendInvitationsMode sendInvitationsMode = null;
 
   /**
+   * The send invitations mode.
+   */
+  private Boolean skipSendingMeetingInviteToGroup = null;
+
+  /**
    * Initializes a new instance.
    *
    * @param service           The service.
    * @param errorHandlingMode Indicates how errors should be handled.
    * @throws Exception
    */
-  protected CreateItemRequestBase(ExchangeService service,
-      ServiceErrorHandling errorHandlingMode)
-      throws Exception {
+  protected CreateItemRequestBase(ExchangeService service, ServiceErrorHandling errorHandlingMode) throws Exception {
     super(service, errorHandlingMode);
   }
 
@@ -86,7 +88,8 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
    *
    * @return XML element name.
    */
-  @Override public String getXmlElementName() {
+  @Override
+  public String getXmlElementName() {
     return XmlElementNames.CreateItem;
   }
 
@@ -134,20 +137,21 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
    * Writes the attribute to XML.
    *
    * @param writer The writer.
-   * @throws ServiceXmlSerializationException the service xml serialization exception
+   * @throws ServiceXmlSerializationException the service xml serialization
+   *                                          exception
    */
   @Override
-  protected void writeAttributesToXml(EwsServiceXmlWriter writer)
-      throws ServiceXmlSerializationException {
+  protected void writeAttributesToXml(EwsServiceXmlWriter writer) throws ServiceXmlSerializationException {
     super.writeAttributesToXml(writer);
     if (this.messageDisposition != null) {
-      writer.writeAttributeValue(XmlAttributeNames.MessageDisposition,
-          this.getMessageDisposition());
+      writer.writeAttributeValue(XmlAttributeNames.MessageDisposition, this.getMessageDisposition());
     }
     if (this.sendInvitationsMode != null) {
-      writer.writeAttributeValue(
-          XmlAttributeNames.SendMeetingInvitations,
-          this.sendInvitationsMode);
+      writer.writeAttributeValue(XmlAttributeNames.SendMeetingInvitations, this.sendInvitationsMode);
+    }
+    if (this.skipSendingMeetingInviteToGroup != null) {
+      writer.writeAttributeValue(XmlAttributeNames.SkipSendingMeetingInviteToGroup,
+          this.skipSendingMeetingInviteToGroup);
     }
   }
 
@@ -170,7 +174,7 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
   }
 
   /**
-   * Gets  the send invitations mode.
+   * Gets the send invitations mode.
    *
    * @return the send invitations mode
    */
@@ -188,7 +192,7 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
   }
 
   /**
-   * Gets  the item.
+   * Gets the item.
    *
    * @param value the new item
    */
@@ -203,6 +207,24 @@ abstract class CreateItemRequestBase<TServiceObject extends ServiceObject,
    */
   public Iterable<TServiceObject> getItems() {
     return this.getObjects();
+  }
+
+  /**
+   * Gets the send invitations mode.
+   *
+   * @return the send invitations mode
+   */
+  public Boolean getSkipSendingMeetingInviteToGroup() {
+    return skipSendingMeetingInviteToGroup;
+  }
+
+  /**
+   * Sets the send invitations mode.
+   *
+   * @param value the new send invitations mode
+   */
+  public void setSkipSendingMeetingInviteToGroup(Boolean value) {
+    skipSendingMeetingInviteToGroup = value;
   }
 
 }
