@@ -144,14 +144,14 @@ public class EmailMessage extends Item {
     if (this.isNew()) {
       if ((this.getAttachments().getCount() == 0) ||
           (messageDisposition == MessageDisposition.SaveOnly)) {
-        this.internalCreate(parentFolderId, messageDisposition, null, false);
+        this.internalCreate(parentFolderId, messageDisposition, null, null);
       } else {
         // Bug E14:80316 -- If the message has attachments, save as a
         // draft (and add attachments) before sending.
         this.internalCreate(null, // null means use the Drafts folder in
             // the mailbox of the authenticated
             // user.
-            MessageDisposition.SaveOnly, null, false);
+            MessageDisposition.SaveOnly, null, null);
 
         this.getService().sendItem(this, parentFolderId);
       }

@@ -373,7 +373,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
   public void save(WellKnownFolderName destinationFolderName,
       SendInvitationsMode sendInvitationsMode) throws Exception {
     this.internalCreate(new FolderId(destinationFolderName), null,
-        sendInvitationsMode, false);
+        sendInvitationsMode, null);
   }
 
   /**
@@ -389,7 +389,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
       SendInvitationsMode sendInvitationsMode) throws Exception {
     EwsUtilities.validateParam(destinationFolderId, "destinationFolderId");
 
-    this.internalCreate(destinationFolderId, null, sendInvitationsMode, false);
+    this.internalCreate(destinationFolderId, null, sendInvitationsMode, null);
   }
 
     /**
@@ -405,7 +405,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
       SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
 
     this.internalCreate(new FolderId(destinationFolderName), null,
-        sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : false);
+        sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : null);
   }
 
   /**
@@ -434,7 +434,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void save(SendInvitationsMode sendInvitationsMode) throws Exception {
-    this.internalCreate(null, null, sendInvitationsMode, false);
+    this.internalCreate(null, null, sendInvitationsMode, null);
   }
 
   /**

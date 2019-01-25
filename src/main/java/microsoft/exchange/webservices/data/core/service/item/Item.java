@@ -386,7 +386,7 @@ public class Item extends ServiceObject {
    * @throws Exception the exception
    */
   public void save() throws Exception {
-    this.internalCreate(null, MessageDisposition.SaveOnly, null, false);
+    this.internalCreate(null, MessageDisposition.SaveOnly, null, null);
   }
 
   /**
