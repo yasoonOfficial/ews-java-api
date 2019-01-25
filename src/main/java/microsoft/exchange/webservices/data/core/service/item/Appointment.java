@@ -373,7 +373,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
   public void save(WellKnownFolderName destinationFolderName,
       SendInvitationsMode sendInvitationsMode) throws Exception {
     this.internalCreate(new FolderId(destinationFolderName), null,
-        sendInvitationsMode);
+        sendInvitationsMode, false);
   }
 
   /**
@@ -389,8 +389,41 @@ public class Appointment extends Item implements ICalendarActionProvider {
       SendInvitationsMode sendInvitationsMode) throws Exception {
     EwsUtilities.validateParam(destinationFolderId, "destinationFolderId");
 
-    this.internalCreate(destinationFolderId, null, sendInvitationsMode);
+    this.internalCreate(destinationFolderId, null, sendInvitationsMode, false);
   }
+
+    /**
+   * Saves this appointment in the specified folder. Calling this method
+   * results in at least one call to EWS. Mutliple calls to EWS might be made
+   * if attachments have been added.
+   *
+   * @param destinationFolderName the destination folder name
+   * @param sendInvitationsMode   the send invitations mode
+   * @throws Exception the exception
+   */
+  public void save(WellKnownFolderName destinationFolderName,
+      SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
+
+    this.internalCreate(new FolderId(destinationFolderName), null,
+        sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : false);
+  }
+
+  /**
+   * Saves this appointment in the specified folder. Calling this method
+   * results in at least one call to EWS. Mutliple calls to EWS might be made
+   * if attachments have been added.
+   *
+   * @param destinationFolderId the destination folder id
+   * @param sendInvitationsMode the send invitations mode
+   * @throws Exception the exception
+   */
+  public void save(FolderId destinationFolderId,
+      SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
+    EwsUtilities.validateParam(destinationFolderId, "destinationFolderId");
+
+    this.internalCreate(destinationFolderId, null, sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : false);
+  }
+
 
   /**
    * Saves this appointment in the Calendar folder. Calling this method
@@ -401,7 +434,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void save(SendInvitationsMode sendInvitationsMode) throws Exception {
-    this.internalCreate(null, null, sendInvitationsMode);
+    this.internalCreate(null, null, sendInvitationsMode, false);
   }
 
   /**

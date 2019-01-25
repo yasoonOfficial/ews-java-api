@@ -580,6 +580,7 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
    * @param parentFolderId      the parent folder id
    * @param messageDisposition  the message disposition
    * @param sendInvitationsMode the send invitations mode
+   * @param skipSendingMeetingInviteToGroup the group skip sending meeting mode
    * @param errorHandling       the error handling
    * @return A ServiceResponseCollection providing creation results for each
    * of the specified item.
@@ -589,12 +590,15 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
       Collection<Item> items, FolderId parentFolderId,
       MessageDisposition messageDisposition,
       SendInvitationsMode sendInvitationsMode,
+      Boolean skipSendingMeetingInviteToGroup,
       ServiceErrorHandling errorHandling) throws Exception {
     CreateItemRequest request = new CreateItemRequest(this, errorHandling);
     request.setParentFolderId(parentFolderId);
     request.setItems(items);
     request.setMessageDisposition(messageDisposition);
     request.setSendInvitationsMode(sendInvitationsMode);
+    request.setSkipSendingMeetingInviteToGroup(skipSendingMeetingInviteToGroup);
+    
     return request.execute();
   }
 
@@ -614,7 +618,8 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
   public ServiceResponseCollection<ServiceResponse> createItems(
       Collection<Item> items, FolderId parentFolderId,
       MessageDisposition messageDisposition,
-      SendInvitationsMode sendInvitationsMode) throws Exception {
+      SendInvitationsMode sendInvitationsMode,
+      Boolean skipSendingMeetingInviteToGroup) throws Exception {
     // All item have to be new.
     if (!EwsUtilities.trueForAll(items, new IPredicate<Item>() {
       @Override
@@ -637,7 +642,7 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
       throw new ServiceValidationException("This operation doesn't support item that have attachments.");
     }
     return this.internalCreateItems(items, parentFolderId,
-        messageDisposition, sendInvitationsMode,
+        messageDisposition, sendInvitationsMode, skipSendingMeetingInviteToGroup,
         ServiceErrorHandling.ReturnErrors);
   }
 
@@ -651,10 +656,10 @@ public class ExchangeService extends ExchangeServiceBase implements IAutodiscove
    * @throws Exception the exception
    */
   public void createItem(Item item, FolderId parentFolderId, MessageDisposition messageDisposition,
-      SendInvitationsMode sendInvitationsMode) throws Exception {
+      SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
     ArrayList<Item> items = new ArrayList<Item>();
     items.add(item);
-    internalCreateItems(items, parentFolderId, messageDisposition, sendInvitationsMode,
+    internalCreateItems(items, parentFolderId, messageDisposition, sendInvitationsMode, skipSendingMeetingInviteToGroup,
                         ServiceErrorHandling.ThrowOnError);
   }
 
