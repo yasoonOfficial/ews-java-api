@@ -378,6 +378,32 @@ public class Item extends ServiceObject {
   }
 
   /**
+   * Saves this item in a specific folder. Calling this method results in at
+   * least one call to EWS. Mutliple calls to EWS might be made if attachments
+   * have been added.
+   *
+   * @param parentFolderId the parent folder id
+   * @throws Exception the exception
+   */
+  public void save(FolderId parentFolderId) throws Exception {
+    EwsUtilities.validateParam(parentFolderId, "parentFolderId");
+    this.internalCreate(parentFolderId, MessageDisposition.SaveOnly, null, null);
+  }
+
+  /**
+   * Saves this item in a specific folder. Calling this method results in at
+   * least one call to EWS. Mutliple calls to EWS might be made if attachments
+   * have been added.
+   *
+   * @param parentFolderName the parent folder name
+   * @throws Exception the exception
+   */
+  public void save(WellKnownFolderName parentFolderName) throws Exception {
+    this.internalCreate(new FolderId(parentFolderName),
+        MessageDisposition.SaveOnly, null, null);
+  }
+
+  /**
    * Saves this item in the default folder based on the item's type (for
    * example, an e-mail message is saved to the Drafts folder). Calling this
    * method results in at least one call to EWS. Mutliple calls to EWS might
