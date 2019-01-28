@@ -67,6 +67,27 @@ public final class TimeZoneUtils {
     return olsonTimeZoneToMs.get(id);
   }
 
+  public static ZoneId getZoneId(final TimeZoneDefinition msTimezone) {
+    if (msTimezone == null) {
+      throw new IllegalArgumentException("Parameter \"msTimezone\" must be defined");
+    }
+
+    final String id = msTimezone.getId();
+    final Set<String> matchingIanaIds = getKeysByValue(olsonTimeZoneToMs, id);
+
+    // We have some dummy entries in our list, don't rely on the order, but double
+    // check => Usually order should be enough.. but well
+    final Iterator<String> matchingIterator = matchingIanaIds.iterator();
+    String ianaTimezoneId = matchingIterator.next();
+    if (ianaTimezoneId.startsWith("_") && matchingIterator.hasNext()) {
+      ianaTimezoneId = matchingIterator.next();
+    } else if (ianaTimezoneId.startsWith("_")) {
+      ianaTimezoneId = ianaTimezoneId.replace("_", "");
+    }
+
+    return ZoneId.of(ianaTimezoneId);
+  }
+
   public static ZoneOffset getTimeZoneOffset(final TimeZoneDefinition msTimezone, final Instant when) {
     if (msTimezone == null) {
       throw new IllegalArgumentException("Parameter \"msTimezone\" must be defined");
