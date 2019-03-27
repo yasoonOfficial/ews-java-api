@@ -76,8 +76,8 @@ import java.util.Date;
 public class Appointment extends Item implements ICalendarActionProvider {
 
   /**
-   * Initializes an unsaved local instance of Appointment". To bind to an
-   * existing appointment, use Appointment.Bind() instead.
+   * Initializes an unsaved local instance of Appointment". To bind to an existing
+   * appointment, use Appointment.Bind() instead.
    *
    * @param service The ExchangeService instance to which this appointmtnt is
    *                bound.
@@ -94,8 +94,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param isNew            If true, attachment is new.
    * @throws Exception the exception
    */
-  public Appointment(ItemAttachment parentAttachment, boolean isNew)
-      throws Exception {
+  public Appointment(ItemAttachment parentAttachment, boolean isNew) throws Exception {
     // If we're running against Exchange 2007, we need to explicitly preset
     // the StartTimeZone property since Exchange 2007 will otherwise scope
     // start and end to UTC.
@@ -103,70 +102,65 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Binds to an existing appointment and loads the specified set of
-   * property. Calling this method results in a call to EWS.
+   * Binds to an existing appointment and loads the specified set of property.
+   * Calling this method results in a call to EWS.
    *
    * @param service     the service
    * @param id          the id
    * @param propertySet the property set
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bind(ExchangeService service, ItemId id,
-      PropertySet propertySet) throws Exception {
+  public static Appointment bind(ExchangeService service, ItemId id, PropertySet propertySet) throws Exception {
     return service.bindToItem(Appointment.class, id, propertySet);
   }
 
   /**
-   * Binds to an existing appointment and loads its first class property.
-   * Calling this method results in a call to EWS.
+   * Binds to an existing appointment and loads its first class property. Calling
+   * this method results in a call to EWS.
    *
    * @param service the service
    * @param id      the id
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bind(ExchangeService service, ItemId id)
-      throws Exception {
+  public static Appointment bind(ExchangeService service, ItemId id) throws Exception {
     return Appointment.bind(service, id, PropertySet.FirstClassProperties);
   }
 
   /**
-   * Binds to an existing appointment and loads its first class property.
-   * Calling this method results in a call to EWS.
+   * Binds to an existing appointment and loads its first class property. Calling
+   * this method results in a call to EWS.
    *
    * @param service           the service
    * @param recurringMasterId the recurring master id
    * @param occurenceIndex    the occurence index
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bindToOccurrence(ExchangeService service,
-      ItemId recurringMasterId, int occurenceIndex) throws Exception {
-    return Appointment.bindToOccurrence(service, recurringMasterId,
-        occurenceIndex, PropertySet.FirstClassProperties);
+  public static Appointment bindToOccurrence(ExchangeService service, ItemId recurringMasterId, int occurenceIndex)
+      throws Exception {
+    return Appointment.bindToOccurrence(service, recurringMasterId, occurenceIndex, PropertySet.FirstClassProperties);
   }
 
   /**
-   * Binds to an existing appointment and loads its first class property.
-   * Calling this method results in a call to EWS.
+   * Binds to an existing appointment and loads its first class property. Calling
+   * this method results in a call to EWS.
    *
    * @param service           the service
    * @param recurringMasterId the recurring master id
    * @param occurenceIndex    the occurence index
    * @param propertySet       the property set
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bindToOccurrence(ExchangeService service,
-      ItemId recurringMasterId, int occurenceIndex,
+  public static Appointment bindToOccurrence(ExchangeService service, ItemId recurringMasterId, int occurenceIndex,
       PropertySet propertySet) throws Exception {
-    AppointmentOccurrenceId occurenceId = new AppointmentOccurrenceId(
-        recurringMasterId.getUniqueId(), occurenceIndex);
+    AppointmentOccurrenceId occurenceId = new AppointmentOccurrenceId(recurringMasterId.getUniqueId(), occurenceIndex);
     return Appointment.bind(service, occurenceId, propertySet);
   }
 
@@ -176,14 +170,12 @@ public class Appointment extends Item implements ICalendarActionProvider {
    *
    * @param service      the service
    * @param occurrenceId the occurrence id
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bindToRecurringMaster(ExchangeService service,
-      ItemId occurrenceId) throws Exception {
-    return Appointment.bindToRecurringMaster(service, occurrenceId,
-        PropertySet.FirstClassProperties);
+  public static Appointment bindToRecurringMaster(ExchangeService service, ItemId occurrenceId) throws Exception {
+    return Appointment.bindToRecurringMaster(service, occurrenceId, PropertySet.FirstClassProperties);
   }
 
   /**
@@ -193,15 +185,13 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param service      the service
    * @param occurrenceId the occurrence id
    * @param propertySet  the property set
-   * @return An Appointment instance representing the appointment
-   * corresponding to the specified Id.
+   * @return An Appointment instance representing the appointment corresponding to
+   *         the specified Id.
    * @throws Exception the exception
    */
-  public static Appointment bindToRecurringMaster(ExchangeService service,
-      ItemId occurrenceId, PropertySet propertySet) throws Exception {
-    RecurringAppointmentMasterId recurringMasterId =
-        new RecurringAppointmentMasterId(
-            occurrenceId.getUniqueId());
+  public static Appointment bindToRecurringMaster(ExchangeService service, ItemId occurrenceId, PropertySet propertySet)
+      throws Exception {
+    RecurringAppointmentMasterId recurringMasterId = new RecurringAppointmentMasterId(occurrenceId.getUniqueId());
     return Appointment.bind(service, recurringMasterId, propertySet);
   }
 
@@ -210,7 +200,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    *
    * @return The schema associated with this type of object
    */
-  @Override public ServiceObjectSchema getSchema() {
+  @Override
+  public ServiceObjectSchema getSchema() {
     return AppointmentSchema.Instance;
   }
 
@@ -218,18 +209,19 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * Gets the minimum required server version.
    *
    * @return Earliest Exchange version in which this service object type is
-   * supported.
+   *         supported.
    */
-  @Override public ExchangeVersion getMinimumRequiredServerVersion() {
+  @Override
+  public ExchangeVersion getMinimumRequiredServerVersion() {
     return ExchangeVersion.Exchange2007_SP1;
   }
 
   /**
-   * Determines whether property defined with
-   * ScopedDateTimePropertyDefinition require custom time zone scoping.
+   * Determines whether property defined with ScopedDateTimePropertyDefinition
+   * require custom time zone scoping.
    *
    * @return if this item type requires custom scoping for scoped date/time
-   * property; otherwise, .
+   *         property; otherwise, .
    */
   @Override
   protected boolean getIsCustomDateTimeScopingRequired() {
@@ -241,43 +233,44 @@ public class Appointment extends Item implements ICalendarActionProvider {
    *
    * @throws Exception
    */
-  @Override public void validate() throws Exception {
+  @Override
+  public void validate() throws Exception {
     super.validate();
 
-    //  PS # 250452: Make sure that if we're
-    //on the Exchange2007_SP1 schema version,
+    // PS # 250452: Make sure that if we're
+    // on the Exchange2007_SP1 schema version,
     // if any of the following
-    //  property are set or updated:
-    //      o   Start
-    //      o   End
-    //      o   IsAllDayEvent
-    //      o   Recurrence
-    //  ... then, we must send the MeetingTimeZone element
+    // property are set or updated:
+    // o Start
+    // o End
+    // o IsAllDayEvent
+    // o Recurrence
+    // ... then, we must send the MeetingTimeZone element
     // (which is generated from StartTimeZone for
-    //  Exchange2007_SP1 request (see
-    //StartTimeZonePropertyDefinition.cs).
+    // Exchange2007_SP1 request (see
+    // StartTimeZonePropertyDefinition.cs).
     // If the StartTimeZone isn't
-    //  in the property bag, then throw, because clients must
+    // in the property bag, then throw, because clients must
     // supply the proper time zone - either by
-    //  loading it from a currently-existing appointment,
-    //or by setting it directly.
+    // loading it from a currently-existing appointment,
+    // or by setting it directly.
     // Otherwise, to dirty
-    //  the StartTimeZone property, we just set it to its current value.
-    if ((this.getService().getRequestedServerVersion() == ExchangeVersion.Exchange2007_SP1) &&
-        !(this.getService().getExchange2007CompatibilityMode())) {
-      if (this.getPropertyBag().isPropertyUpdated(AppointmentSchema.Start) ||
-          this.getPropertyBag().isPropertyUpdated(AppointmentSchema.End) ||
-          this.getPropertyBag().isPropertyUpdated(AppointmentSchema.IsAllDayEvent) ||
-          this.getPropertyBag().isPropertyUpdated(AppointmentSchema.Recurrence)) {
-        //  If the property isn't in the property bag, throw....
+    // the StartTimeZone property, we just set it to its current value.
+    if ((this.getService().getRequestedServerVersion() == ExchangeVersion.Exchange2007_SP1)
+        && !(this.getService().getExchange2007CompatibilityMode())) {
+      if (this.getPropertyBag().isPropertyUpdated(AppointmentSchema.Start)
+          || this.getPropertyBag().isPropertyUpdated(AppointmentSchema.End)
+          || this.getPropertyBag().isPropertyUpdated(AppointmentSchema.IsAllDayEvent)
+          || this.getPropertyBag().isPropertyUpdated(AppointmentSchema.Recurrence)) {
+        // If the property isn't in the property bag, throw....
         if (!this.getPropertyBag().contains(AppointmentSchema.StartTimeZone)) {
           throw new ServiceLocalException("StartTimeZone required when setting the Start, End, IsAllDayEvent, "
-                                          + "or Recurrence property.  You must load or assign this property "
-                                          + "before attempting to update the appointment.");
-          //getStartTimeZoneRequired());
+              + "or Recurrence property.  You must load or assign this property "
+              + "before attempting to update the appointment.");
+          // getStartTimeZoneRequired());
         }
 
-        //  Otherwise, set the time zone to its current value to
+        // Otherwise, set the time zone to its current value to
         // force it to be sent with the request.
         this.setStartTimeZone(this.getStartTimeZone());
       }
@@ -285,32 +278,28 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Creates a reply response to the organizer and/or attendees of the
-   * meeting.
+   * Creates a reply response to the organizer and/or attendees of the meeting.
    *
    * @param replyAll the reply all
    * @return A ResponseMessage representing the reply response that can
-   * subsequently be modified and sent.
+   *         subsequently be modified and sent.
    * @throws Exception the exception
    */
   public ResponseMessage createReply(boolean replyAll) throws Exception {
     this.throwIfThisIsNew();
 
-    return new ResponseMessage(this,
-        replyAll ? ResponseMessageType.ReplyAll :
-            ResponseMessageType.Reply);
+    return new ResponseMessage(this, replyAll ? ResponseMessageType.ReplyAll : ResponseMessageType.Reply);
   }
 
   /**
-   * Replies to the organizer and/or the attendees of the meeting. Calling
-   * this method results in a call to EWS.
+   * Replies to the organizer and/or the attendees of the meeting. Calling this
+   * method results in a call to EWS.
    *
    * @param bodyPrefix the body prefix
    * @param replyAll   the reply all
    * @throws Exception the exception
    */
-  public void reply(MessageBody bodyPrefix, boolean replyAll)
-      throws Exception {
+  public void reply(MessageBody bodyPrefix, boolean replyAll) throws Exception {
     ResponseMessage responseMessage = this.createReply(replyAll);
 
     responseMessage.setBodyPrefix(bodyPrefix);
@@ -321,7 +310,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * Creates a forward message from this appointment.
    *
    * @return A ResponseMessage representing the forward response that can
-   * subsequently be modified and sent.
+   *         subsequently be modified and sent.
    * @throws Exception the exception
    */
   public ResponseMessage createForward() throws Exception {
@@ -336,8 +325,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param toRecipients the to recipients
    * @throws Exception the exception
    */
-  public void forward(MessageBody bodyPrefix, EmailAddress... toRecipients)
-      throws Exception {
+  public void forward(MessageBody bodyPrefix, EmailAddress... toRecipients) throws Exception {
     if (null != toRecipients) {
       forward(bodyPrefix, Arrays.asList(toRecipients));
     }
@@ -350,85 +338,80 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param toRecipients the to recipients
    * @throws Exception the exception
    */
-  public void forward(MessageBody bodyPrefix,
-      Iterable<EmailAddress> toRecipients) throws Exception {
+  public void forward(MessageBody bodyPrefix, Iterable<EmailAddress> toRecipients) throws Exception {
     ResponseMessage responseMessage = this.createForward();
 
     responseMessage.setBodyPrefix(bodyPrefix);
-    responseMessage.getToRecipients()
-        .addEmailRange(toRecipients.iterator());
+    responseMessage.getToRecipients().addEmailRange(toRecipients.iterator());
 
     responseMessage.sendAndSaveCopy();
   }
 
   /**
-   * Saves this appointment in the specified folder. Calling this method
-   * results in at least one call to EWS. Mutliple calls to EWS might be made
-   * if attachments have been added.
+   * Saves this appointment in the specified folder. Calling this method results
+   * in at least one call to EWS. Mutliple calls to EWS might be made if
+   * attachments have been added.
    *
    * @param destinationFolderName the destination folder name
    * @param sendInvitationsMode   the send invitations mode
    * @throws Exception the exception
    */
-  public void save(WellKnownFolderName destinationFolderName,
-      SendInvitationsMode sendInvitationsMode) throws Exception {
-    this.internalCreate(new FolderId(destinationFolderName), null,
-        sendInvitationsMode, null);
+  public void save(WellKnownFolderName destinationFolderName, SendInvitationsMode sendInvitationsMode)
+      throws Exception {
+    this.internalCreate(new FolderId(destinationFolderName), null, sendInvitationsMode, null);
   }
 
   /**
-   * Saves this appointment in the specified folder. Calling this method
-   * results in at least one call to EWS. Mutliple calls to EWS might be made
-   * if attachments have been added.
+   * Saves this appointment in the specified folder. Calling this method results
+   * in at least one call to EWS. Mutliple calls to EWS might be made if
+   * attachments have been added.
    *
    * @param destinationFolderId the destination folder id
    * @param sendInvitationsMode the send invitations mode
    * @throws Exception the exception
    */
-  public void save(FolderId destinationFolderId,
-      SendInvitationsMode sendInvitationsMode) throws Exception {
+  public void save(FolderId destinationFolderId, SendInvitationsMode sendInvitationsMode) throws Exception {
     EwsUtilities.validateParam(destinationFolderId, "destinationFolderId");
 
     this.internalCreate(destinationFolderId, null, sendInvitationsMode, null);
   }
 
-    /**
-   * Saves this appointment in the specified folder. Calling this method
-   * results in at least one call to EWS. Mutliple calls to EWS might be made
-   * if attachments have been added.
+  /**
+   * Saves this appointment in the specified folder. Calling this method results
+   * in at least one call to EWS. Mutliple calls to EWS might be made if
+   * attachments have been added.
    *
    * @param destinationFolderName the destination folder name
    * @param sendInvitationsMode   the send invitations mode
    * @throws Exception the exception
    */
-  public void save(WellKnownFolderName destinationFolderName,
-      SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
+  public void save(WellKnownFolderName destinationFolderName, SendInvitationsMode sendInvitationsMode,
+      Boolean skipSendingMeetingInviteToGroup) throws Exception {
 
-    this.internalCreate(new FolderId(destinationFolderName), null,
-        sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : null);
+    this.internalCreate(new FolderId(destinationFolderName), null, sendInvitationsMode,
+        skipSendingMeetingInviteToGroup);
   }
 
   /**
-   * Saves this appointment in the specified folder. Calling this method
-   * results in at least one call to EWS. Mutliple calls to EWS might be made
-   * if attachments have been added.
+   * Saves this appointment in the specified folder. Calling this method results
+   * in at least one call to EWS. Mutliple calls to EWS might be made if
+   * attachments have been added.
    *
    * @param destinationFolderId the destination folder id
    * @param sendInvitationsMode the send invitations mode
    * @throws Exception the exception
    */
-  public void save(FolderId destinationFolderId,
-      SendInvitationsMode sendInvitationsMode, Boolean skipSendingMeetingInviteToGroup) throws Exception {
+  public void save(FolderId destinationFolderId, SendInvitationsMode sendInvitationsMode,
+      Boolean skipSendingMeetingInviteToGroup) throws Exception {
     EwsUtilities.validateParam(destinationFolderId, "destinationFolderId");
 
-    this.internalCreate(destinationFolderId, null, sendInvitationsMode, skipSendingMeetingInviteToGroup != null ? skipSendingMeetingInviteToGroup : false);
+    this.internalCreate(destinationFolderId, null, sendInvitationsMode, skipSendingMeetingInviteToGroup);
   }
 
-
   /**
-   * Saves this appointment in the Calendar folder. Calling this method
-   * results in at least one call to EWS. Mutliple calls to EWS might be made
-   * if attachments have been added.
+   * Saves this appointment in the Calendar folder. Calling this method results in
+   * at least one call to EWS. Mutliple calls to EWS might be made if attachments
+   * have been added.
    *
    * @param sendInvitationsMode the send invitations mode
    * @throws Exception the exception
@@ -438,21 +421,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Applies the local changes that have been made to this appointment.
-   * Calling this method results in at least one call to EWS. Mutliple calls
-   * to EWS might be made if attachments have been added or removed.
+   * Applies the local changes that have been made to this appointment. Calling
+   * this method results in at least one call to EWS. Mutliple calls to EWS might
+   * be made if attachments have been added or removed.
    *
    * @param conflictResolutionMode             the conflict resolution mode
-   * @param sendInvitationsOrCancellationsMode the send invitations or cancellations mode
+   * @param sendInvitationsOrCancellationsMode the send invitations or
+   *                                           cancellations mode
    * @throws Exception the exception
    */
-  public void update(
-      ConflictResolutionMode conflictResolutionMode,
-      SendInvitationsOrCancellationsMode
-          sendInvitationsOrCancellationsMode)
-      throws Exception {
-    this.internalUpdate(null, conflictResolutionMode, null,
-        sendInvitationsOrCancellationsMode);
+  public void update(ConflictResolutionMode conflictResolutionMode,
+      SendInvitationsOrCancellationsMode sendInvitationsOrCancellationsMode) throws Exception {
+    this.internalUpdate(null, conflictResolutionMode, null, sendInvitationsOrCancellationsMode);
   }
 
   /**
@@ -462,31 +442,26 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param sendCancellationsMode the send cancellations mode
    * @throws Exception the exception
    */
-  public void delete(DeleteMode deleteMode,
-      SendCancellationsMode sendCancellationsMode) throws Exception {
+  public void delete(DeleteMode deleteMode, SendCancellationsMode sendCancellationsMode) throws Exception {
     this.internalDelete(deleteMode, sendCancellationsMode, null);
   }
 
   /**
-   * Creates a local meeting acceptance message that can be customized and
-   * sent.
+   * Creates a local meeting acceptance message that can be customized and sent.
    *
    * @param tentative the tentative
-   * @return An AcceptMeetingInvitationMessage representing the meeting
-   * acceptance message.
+   * @return An AcceptMeetingInvitationMessage representing the meeting acceptance
+   *         message.
    * @throws Exception the exception
    */
-  public AcceptMeetingInvitationMessage createAcceptMessage(boolean tentative)
-      throws Exception {
+  public AcceptMeetingInvitationMessage createAcceptMessage(boolean tentative) throws Exception {
     return new AcceptMeetingInvitationMessage(this, tentative);
   }
 
   /**
-   * Creates a local meeting acceptance message that can be customized and
-   * sent.
+   * Creates a local meeting acceptance message that can be customized and sent.
    *
-   * @return A CancelMeetingMessage representing the meeting cancellation
-   * message.
+   * @return A CancelMeetingMessage representing the meeting cancellation message.
    * @throws Exception the exception
    */
   public CancelMeetingMessage createCancelMeetingMessage() throws Exception {
@@ -494,15 +469,13 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Creates a local meeting declination message that can be customized and
-   * sent.
+   * Creates a local meeting declination message that can be customized and sent.
    *
    * @return A DeclineMeetingInvitation representing the meeting declination
-   * message.
+   *         message.
    * @throws Exception the exception
    */
-  public DeclineMeetingInvitationMessage createDeclineMessage()
-      throws Exception {
+  public DeclineMeetingInvitationMessage createDeclineMessage() throws Exception {
     return new DeclineMeetingInvitationMessage(this);
   }
 
@@ -510,8 +483,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * Accepts the meeting. Calling this method results in a call to EWS.
    *
    * @param sendResponse the send response
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
   public CalendarActionResults accept(boolean sendResponse) throws Exception {
@@ -523,12 +496,11 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * EWS.
    *
    * @param sendResponse the send response
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
-  public CalendarActionResults acceptTentatively(boolean sendResponse)
-      throws Exception {
+  public CalendarActionResults acceptTentatively(boolean sendResponse) throws Exception {
     return this.internalAccept(true, sendResponse);
   }
 
@@ -537,14 +509,12 @@ public class Appointment extends Item implements ICalendarActionProvider {
    *
    * @param tentative    the tentative
    * @param sendResponse the send response
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
-  protected CalendarActionResults internalAccept(boolean tentative,
-      boolean sendResponse) throws Exception {
-    AcceptMeetingInvitationMessage accept = this
-        .createAcceptMessage(tentative);
+  protected CalendarActionResults internalAccept(boolean tentative, boolean sendResponse) throws Exception {
+    AcceptMeetingInvitationMessage accept = this.createAcceptMessage(tentative);
 
     if (sendResponse) {
       return accept.calendarSendAndSaveCopy();
@@ -554,11 +524,11 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Cancels the meeting and sends cancellation messages to all attendees.
-   * Calling this method results in a call to EWS.
+   * Cancels the meeting and sends cancellation messages to all attendees. Calling
+   * this method results in a call to EWS.
    *
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
   public CalendarActionResults cancelMeeting() throws Exception {
@@ -566,16 +536,15 @@ public class Appointment extends Item implements ICalendarActionProvider {
   }
 
   /**
-   * Cancels the meeting and sends cancellation messages to all attendees.
-   * Calling this method results in a call to EWS.
+   * Cancels the meeting and sends cancellation messages to all attendees. Calling
+   * this method results in a call to EWS.
    *
    * @param cancellationMessageText the cancellation message text
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
-  public CalendarActionResults cancelMeeting(String cancellationMessageText)
-      throws Exception {
+  public CalendarActionResults cancelMeeting(String cancellationMessageText) throws Exception {
     CancelMeetingMessage cancelMsg = this.createCancelMeetingMessage();
     cancelMsg.setBody(new MessageBody(cancellationMessageText));
     return cancelMsg.calendarSendAndSaveCopy();
@@ -586,12 +555,11 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * EWS.
    *
    * @param sendResponse the send response
-   * @return A CalendarActionResults object containing the various item that
-   * were created or modified as a results of this operation.
+   * @return A CalendarActionResults object containing the various item that were
+   *         created or modified as a results of this operation.
    * @throws Exception the exception
    */
-  public CalendarActionResults decline(boolean
-      sendResponse) throws Exception {
+  public CalendarActionResults decline(boolean sendResponse) throws Exception {
     DeclineMeetingInvitationMessage decline = this.createDeclineMessage();
 
     if (sendResponse) {
@@ -604,8 +572,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
   /**
    * Gets the default setting for sending cancellations on Delete.
    *
-   * @return If Delete() is called on Appointment, we want to send
-   * cancellations and save a copy.
+   * @return If Delete() is called on Appointment, we want to send cancellations
+   *         and save a copy.
    */
   @Override
   protected SendCancellationsMode getDefaultSendCancellationsMode() {
@@ -628,8 +596,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the default send invitations or cancellations mode
    */
   @Override
-  protected SendInvitationsOrCancellationsMode
-  getDefaultSendInvitationsOrCancellationsMode() {
+  protected SendInvitationsOrCancellationsMode getDefaultSendInvitationsOrCancellationsMode() {
     return SendInvitationsOrCancellationsMode.SendToAllAndSaveCopy;
   }
 
@@ -642,8 +609,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getStart() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Start);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Start);
   }
 
   /**
@@ -653,8 +619,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setStart(Date value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.Start, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.Start, value);
   }
 
   /**
@@ -664,8 +629,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getEnd() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.End);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.End);
   }
 
   /**
@@ -675,8 +639,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setEnd(Date value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.End, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.End, value);
   }
 
   /**
@@ -686,20 +649,17 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getOriginalStart() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.OriginalStart);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.OriginalStart);
   }
 
   /**
-   * Gets a value indicating whether this appointment is an all day
-   * event.
+   * Gets a value indicating whether this appointment is an all day event.
    *
    * @return the checks if is all day event
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsAllDayEvent() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsAllDayEvent);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsAllDayEvent);
   }
 
   /**
@@ -709,21 +669,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setIsAllDayEvent(Boolean value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.IsAllDayEvent, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.IsAllDayEvent, value);
   }
 
   /**
-   * Gets  a value indicating the free/busy status of the owner of this
+   * Gets a value indicating the free/busy status of the owner of this
    * appointment.
    *
    * @return the legacy free busy status
    * @throws ServiceLocalException the service local exception
    */
-  public LegacyFreeBusyStatus getLegacyFreeBusyStatus()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.LegacyFreeBusyStatus);
+  public LegacyFreeBusyStatus getLegacyFreeBusyStatus() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.LegacyFreeBusyStatus);
   }
 
   /**
@@ -732,21 +689,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @param value the new legacy free busy status
    * @throws Exception the exception
    */
-  public void setLegacyFreeBusyStatus(LegacyFreeBusyStatus value)
-      throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.LegacyFreeBusyStatus, value);
+  public void setLegacyFreeBusyStatus(LegacyFreeBusyStatus value) throws Exception {
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.LegacyFreeBusyStatus, value);
   }
 
   /**
-   * Gets  the location of this appointment.
+   * Gets the location of this appointment.
    *
    * @return the location
    * @throws ServiceLocalException the service local exception
    */
   public String getLocation() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Location);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Location);
   }
 
   /**
@@ -756,22 +710,20 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setLocation(String value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.Location, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.Location, value);
   }
 
   /**
    * Gets a text indicating when this appointment occurs. The text returned by
    * When is localized using the Exchange Server culture or using the culture
-   * specified in the PreferredCulture property of the ExchangeService object
-   * this appointment is bound to.
+   * specified in the PreferredCulture property of the ExchangeService object this
+   * appointment is bound to.
    *
    * @return the when
    * @throws ServiceLocalException the service local exception
    */
   public String getWhen() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.When);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.When);
   }
 
   /**
@@ -781,8 +733,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsMeeting() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsMeeting);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsMeeting);
   }
 
   /**
@@ -792,8 +743,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsCancelled() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsCancelled);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsCancelled);
   }
 
   /**
@@ -803,32 +753,28 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsRecurring() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsRecurring);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsRecurring);
   }
 
   /**
-   * Gets a value indicating whether the meeting request has already been
-   * sent.
+   * Gets a value indicating whether the meeting request has already been sent.
    *
    * @return the meeting request was sent
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getMeetingRequestWasSent() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.MeetingRequestWasSent);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.MeetingRequestWasSent);
   }
 
   /**
-   * Gets  a value indicating whether response are requested when
-   * invitations are sent for this meeting.
+   * Gets a value indicating whether response are requested when invitations are
+   * sent for this meeting.
    *
    * @return the checks if is response requested
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsResponseRequested() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsResponseRequested);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsResponseRequested);
   }
 
   /**
@@ -838,8 +784,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setIsResponseRequested(Boolean value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.IsResponseRequested, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.IsResponseRequested, value);
   }
 
   /**
@@ -849,34 +794,30 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public AppointmentType getAppointmentType() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AppointmentType);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AppointmentType);
   }
 
   /**
-   * Gets a value indicating what was the last response of the user that
-   * loaded this meeting.
+   * Gets a value indicating what was the last response of the user that loaded
+   * this meeting.
    *
    * @return the my response type
    * @throws ServiceLocalException the service local exception
    */
-  public MeetingResponseType getMyResponseType()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.MyResponseType);
+  public MeetingResponseType getMyResponseType() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.MyResponseType);
   }
 
   /**
-   * Gets the organizer of this meeting. The Organizer property is read-only
-   * and is only relevant for attendees. The organizer of a meeting is
-   * automatically set to the user that created the meeting.
+   * Gets the organizer of this meeting. The Organizer property is read-only and
+   * is only relevant for attendees. The organizer of a meeting is automatically
+   * set to the user that created the meeting.
    *
    * @return the organizer
    * @throws ServiceLocalException the service local exception
    */
   public EmailAddress getOrganizer() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Organizer);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Organizer);
   }
 
   /**
@@ -885,10 +826,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the required attendees
    * @throws ServiceLocalException the service local exception
    */
-  public AttendeeCollection getRequiredAttendees()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.RequiredAttendees);
+  public AttendeeCollection getRequiredAttendees() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.RequiredAttendees);
   }
 
   /**
@@ -897,10 +836,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the optional attendees
    * @throws ServiceLocalException the service local exception
    */
-  public AttendeeCollection getOptionalAttendees()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.OptionalAttendees);
+  public AttendeeCollection getOptionalAttendees() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.OptionalAttendees);
   }
 
   /**
@@ -910,32 +847,29 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public AttendeeCollection getResources() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Resources);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Resources);
   }
 
   /**
-   * Gets the number of calendar entries that conflict with this appointment
-   * in the authenticated user's calendar.
+   * Gets the number of calendar entries that conflict with this appointment in
+   * the authenticated user's calendar.
    *
    * @return the conflicting meeting count
    * @throws ServiceLocalException the service local exception
    */
   public Integer getConflictingMeetingCount() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ConflictingMeetingCount);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ConflictingMeetingCount);
   }
 
   /**
-   * Gets the number of calendar entries that are adjacent to this appointment
-   * in the authenticated user's calendar.
+   * Gets the number of calendar entries that are adjacent to this appointment in
+   * the authenticated user's calendar.
    *
    * @return the adjacent meeting count
    * @throws ServiceLocalException the service local exception
    */
   public Integer getAdjacentMeetingCount() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AdjacentMeetingCount);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AdjacentMeetingCount);
   }
 
   /**
@@ -945,10 +879,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the conflicting meetings
    * @throws ServiceLocalException the service local exception
    */
-  public ItemCollection<Appointment> getConflictingMeetings()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ConflictingMeetings);
+  public ItemCollection<Appointment> getConflictingMeetings() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ConflictingMeetings);
   }
 
   /**
@@ -958,10 +890,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the adjacent meetings
    * @throws ServiceLocalException the service local exception
    */
-  public ItemCollection<Appointment> getAdjacentMeetings()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-            AppointmentSchema.AdjacentMeetings);
+  public ItemCollection<Appointment> getAdjacentMeetings() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AdjacentMeetings);
   }
 
   /**
@@ -971,8 +901,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public TimeSpan getDuration() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Duration);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Duration);
   }
 
   /**
@@ -982,8 +911,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public String getTimeZone() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.TimeZone);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.TimeZone);
   }
 
   /**
@@ -993,8 +921,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getAppointmentReplyTime() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AppointmentReplyTime);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AppointmentReplyTime);
   }
 
   /**
@@ -1004,8 +931,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Integer getAppointmentSequenceNumber() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AppointmentSequenceNumber);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AppointmentSequenceNumber);
   }
 
   /**
@@ -1015,21 +941,19 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Integer getAppointmentState() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AppointmentState);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AppointmentState);
   }
 
   /**
-   * Gets the recurrence pattern for this appointment. Available
-   * recurrence pattern classes include Recurrence.DailyPattern,
-   * Recurrence.MonthlyPattern and Recurrence.YearlyPattern.
+   * Gets the recurrence pattern for this appointment. Available recurrence
+   * pattern classes include Recurrence.DailyPattern, Recurrence.MonthlyPattern
+   * and Recurrence.YearlyPattern.
    *
    * @return the recurrence
    * @throws ServiceLocalException the service local exception
    */
   public Recurrence getRecurrence() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.Recurrence);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.Recurrence);
   }
 
   /**
@@ -1044,8 +968,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
         throw new ServiceLocalException("Regeneration pattern can only be used with Task item.");
       }
     }
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.Recurrence, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.Recurrence, value);
   }
 
   /**
@@ -1055,8 +978,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public OccurrenceInfo getFirstOccurrence() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-          AppointmentSchema.FirstOccurrence);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.FirstOccurrence);
   }
 
   /**
@@ -1066,8 +988,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public OccurrenceInfo getLastOccurrence() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-          AppointmentSchema.LastOccurrence);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.LastOccurrence);
   }
 
   /**
@@ -1076,10 +997,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the modified occurrences
    * @throws ServiceLocalException the service local exception
    */
-  public OccurrenceInfoCollection getModifiedOccurrences()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-          AppointmentSchema.ModifiedOccurrences);
+  public OccurrenceInfoCollection getModifiedOccurrences() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ModifiedOccurrences);
   }
 
   /**
@@ -1088,10 +1007,8 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @return the deleted occurrences
    * @throws ServiceLocalException the service local exception
    */
-  public DeletedOccurrenceInfoCollection getDeletedOccurrences()
-      throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-          AppointmentSchema.DeletedOccurrences);
+  public DeletedOccurrenceInfoCollection getDeletedOccurrences() throws ServiceLocalException {
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.DeletedOccurrences);
   }
 
   /**
@@ -1101,8 +1018,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public TimeZoneDefinition getStartTimeZone() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-          AppointmentSchema.StartTimeZone);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.StartTimeZone);
   }
 
   /**
@@ -1112,8 +1028,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setStartTimeZone(TimeZoneDefinition value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.StartTimeZone, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.StartTimeZone, value);
 
   }
 
@@ -1124,8 +1039,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public TimeZoneDefinition getEndTimeZone() throws ServiceLocalException {
-    return getPropertyBag()
-        .getObjectFromPropertyDefinition(AppointmentSchema.EndTimeZone);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.EndTimeZone);
   }
 
   /**
@@ -1135,21 +1049,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setEndTimeZone(TimeZoneDefinition value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.EndTimeZone, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.EndTimeZone, value);
 
   }
 
   /**
-   * Gets  the type of conferencing that will be used during the
-   * meeting.
+   * Gets the type of conferencing that will be used during the meeting.
    *
    * @return the conference type
    * @throws ServiceLocalException the service local exception
    */
   public Integer getConferenceType() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ConferenceType);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ConferenceType);
   }
 
   /**
@@ -1159,20 +1070,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setConferenceType(Integer value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.ConferenceType, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.ConferenceType, value);
   }
 
   /**
-   * Gets a value indicating whether new time proposals are allowed
-   * for attendees of this meeting.
+   * Gets a value indicating whether new time proposals are allowed for attendees
+   * of this meeting.
    *
    * @return the allow new time proposal
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getAllowNewTimeProposal() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.AllowNewTimeProposal);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.AllowNewTimeProposal);
   }
 
   /**
@@ -1182,19 +1091,17 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setAllowNewTimeProposal(Boolean value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.AllowNewTimeProposal, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.AllowNewTimeProposal, value);
   }
 
   /**
-   * Gets  a value indicating whether this is an online meeting.
+   * Gets a value indicating whether this is an online meeting.
    *
    * @return the checks if is online meeting
    * @throws ServiceLocalException the service local exception
    */
   public Boolean getIsOnlineMeeting() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.IsOnlineMeeting);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.IsOnlineMeeting);
   }
 
   /**
@@ -1204,20 +1111,18 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setIsOnlineMeeting(Boolean value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.IsOnlineMeeting, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.IsOnlineMeeting, value);
   }
 
   /**
-   * Gets  the URL of the meeting workspace. A meeting workspace is a
-   * shared Web site for planning meetings and tracking results.
+   * Gets the URL of the meeting workspace. A meeting workspace is a shared Web
+   * site for planning meetings and tracking results.
    *
    * @return the meeting workspace url
    * @throws ServiceLocalException the service local exception
    */
   public String getMeetingWorkspaceUrl() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.MeetingWorkspaceUrl);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.MeetingWorkspaceUrl);
   }
 
   /**
@@ -1227,8 +1132,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setMeetingWorkspaceUrl(String value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.MeetingWorkspaceUrl, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.MeetingWorkspaceUrl, value);
   }
 
   /**
@@ -1238,8 +1142,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public String getNetShowUrl() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.NetShowUrl);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.NetShowUrl);
   }
 
   /**
@@ -1249,8 +1152,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws Exception the exception
    */
   public void setNetShowUrl(String value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.NetShowUrl, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.NetShowUrl, value);
   }
 
   /**
@@ -1260,8 +1162,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public String getICalUid() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ICalUid);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ICalUid);
   }
 
   /**
@@ -1269,10 +1170,9 @@ public class Appointment extends Item implements ICalendarActionProvider {
    *
    * @param value the i cal uid
    * @throws Exception
-   *///this.PropertyBag[AppointmentSchema.ICalUid] = value;
+   */// this.PropertyBag[AppointmentSchema.ICalUid] = value;
   public void setICalUid(String value) throws Exception {
-    this.getPropertyBag().setObjectFromPropertyDefinition(
-        AppointmentSchema.ICalUid, value);
+    this.getPropertyBag().setObjectFromPropertyDefinition(AppointmentSchema.ICalUid, value);
   }
 
   /**
@@ -1282,8 +1182,7 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getICalRecurrenceId() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ICalRecurrenceId);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ICalRecurrenceId);
   }
 
   /**
@@ -1293,7 +1192,6 @@ public class Appointment extends Item implements ICalendarActionProvider {
    * @throws ServiceLocalException the service local exception
    */
   public Date getICalDateTimeStamp() throws ServiceLocalException {
-    return getPropertyBag().getObjectFromPropertyDefinition(
-        AppointmentSchema.ICalDateTimeStamp);
+    return getPropertyBag().getObjectFromPropertyDefinition(AppointmentSchema.ICalDateTimeStamp);
   }
 }
