@@ -86,7 +86,7 @@
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.5</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
-        <animal-sniffer-maven-plugin.version>1.14</animal-sniffer-maven-plugin.version>
+        <animal-sniffer-maven-plugin.version>1.16</animal-sniffer-maven-plugin.version>
         <animal-sniffer-maven-plugin.signature.version>1.0</animal-sniffer-maven-plugin.signature.version>
         <!--  Dependencies [REPORT]:  -->
         <maven-site-plugin.version>3.4</maven-site-plugin.version>
